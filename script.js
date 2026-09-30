@@ -2,7 +2,7 @@
 window.addEventListener('DOMContentLoaded', () => {
     const perfEntries = performance.getEntriesByType("navigation");
     if (perfEntries.length > 0 && perfEntries[0].type === "reload") {
-        window.location.href = 'start.html';
+        window.location.href = 'index.html';
     }
 });
 
