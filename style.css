@@ -85,7 +85,7 @@ body {
 
 .game-container {
     width: 100%;
-    height: 510px; /* ปรับความสูงให้พอดีจอมือถือ ไม่ล้นขอบ */
+    height: 510px; /* พอดีจอโทรศัพท์ ไม่ล้นขอบด้านล่าง */
     background-color: var(--sky-blue);
     position: relative;
     display: flex;
@@ -188,6 +188,8 @@ body {
     font-size: 9px;
     font-weight: bold;
     margin-bottom: 2px;
+    /* เอฟเฟกต์ฟอนต์ 8-bit ภาษาไทย */
+    text-shadow: 1px 1px 0 #333;
 }
 
 .hp-bar-bg {
@@ -204,8 +206,22 @@ body {
     transition: width 0.4s ease;
 }
 
-.lives-hearts {
-    font-size: 11px;
+/* สไตล์กล่องหัวใจพิกเซล 8-bit */
+.pixel-hearts-container {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+    background: #111;
+    padding: 2px 4px;
+    border-radius: 2px;
+    border: 1px solid #333;
+    width: fit-content;
+}
+
+.heart-icon {
+    width: 16px;
+    height: 14px;
+    image-rendering: pixelated; /* คงความคมชัดแบบพิกเซลอาร์ต */
 }
 
 .sprite-box {
@@ -252,12 +268,15 @@ body {
     color: var(--pixel-yellow);
     font-size: 10px;
     font-weight: bold;
+    text-shadow: 1px 1px 0 #333;
 }
 
 .dialog-text {
     color: #fff;
     font-size: 10px;
-    line-height: 1.3;
+    line-height: 1.35;
+    /* ทำให้ตัวหนังสือภาษาไทยดูเหลี่ยมคมสไตล์ 8-bit */
+    text-shadow: 1px 1px 0 #111;
 }
 
 .action-grid {
@@ -269,7 +288,7 @@ body {
 
 .pixel-btn {
     font-family: 'Sarabun', sans-serif;
-    font-weight: bold;
+    font-weight: 800;
     font-size: 10px;
     padding: 6px 8px;
     background-color: #222;
@@ -284,6 +303,7 @@ body {
     text-align: left;
     gap: 5px;
     transition: all 0.1s ease;
+    text-shadow: 1px 1px 0 #000;
 }
 
 .pixel-btn::before {
@@ -296,6 +316,7 @@ body {
     background-color: var(--pixel-yellow);
     color: #000;
     border-color: #000;
+    text-shadow: none;
 }
 
 .pixel-btn:hover::before {
@@ -325,6 +346,7 @@ body {
     color: #fff;
     font-size: 10px;
     text-align: center;
+    text-shadow: 1px 1px 0 #111;
 }
 
 .next-btn {
@@ -333,6 +355,7 @@ body {
     background-color: #00e676;
     color: #000;
     justify-content: center;
+    text-shadow: none;
 }
 
 .next-btn:hover {
@@ -372,6 +395,7 @@ body {
     font-size: 10px;
     line-height: 1.3;
     margin-bottom: 8px;
+    text-shadow: 1px 1px 0 #111;
 }
 
 .restart-btn {
@@ -379,6 +403,7 @@ body {
     background-color: #29b6f6;
     color: #fff;
     justify-content: center;
+    text-shadow: none;
 }
 
 /* Game Over Screen Overlay */
@@ -415,6 +440,7 @@ body {
     margin-bottom: 10px;
     color: #ffcccc;
     white-space: pre-line;
+    text-shadow: 1px 1px 0 #111;
 }
 
 .retry-btn {
@@ -422,6 +448,7 @@ body {
     background-color: #ff1744;
     color: #fff;
     justify-content: center;
+    text-shadow: none;
 }
 
 .retry-btn:hover {
