@@ -21,9 +21,8 @@
             <div class="crt-overlay"></div>
 
             <div class="game-container" id="game-container">
-                <div class="cloud cloud-1"></div>
-                <div class="cloud cloud-2"></div>
-                <div class="cloud cloud-3"></div>
+                <!-- แคนวาสฉากหลัง -->
+                <canvas id="bgCanvas" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1;"></canvas>
 
                 <header class="game-header">
                     <div class="stage-tag" id="level-title-display">STAGE 01/20</div>
@@ -39,7 +38,7 @@
                             <div class="hp-bar-bg"><div class="hp-bar-fill monster-hp" id="monster-hp-bar"></div></div>
                         </div>
                         <div class="sprite-box">
-                            <div class="damage-popup hidden" id="damage-popup">-999!</div>
+                            <div class="damage-popup hidden" id="damage-popup">-100!</div>
                             <canvas id="monsterCanvas" width="45" height="45"></canvas>
                         </div>
                     </div>
@@ -50,13 +49,12 @@
                         </div>
                         <div class="unit-status-bar">
                             <div class="unit-name">ผู้กล้าพิกเซล (Lv.4)</div>
-                            <!-- ช่องแสดงหัวใจพิกเซล 8-bit (5 ดวง) -->
                             <div class="pixel-hearts-container" id="lives-display">
-                                <canvas class="heart-icon" width="13" height="11"></canvas>
-                                <canvas class="heart-icon" width="13" height="11"></canvas>
-                                <canvas class="heart-icon" width="13" height="11"></canvas>
-                                <canvas class="heart-icon" width="13" height="11"></canvas>
-                                <canvas class="heart-icon" width="13" height="11"></canvas>
+                                <canvas class="heart-icon" width="14" height="14"></canvas>
+                                <canvas class="heart-icon" width="14" height="14"></canvas>
+                                <canvas class="heart-icon" width="14" height="14"></canvas>
+                                <canvas class="heart-icon" width="14" height="14"></canvas>
+                                <canvas class="heart-icon" width="14" height="14"></canvas>
                             </div>
                         </div>
                     </div>
@@ -98,49 +96,12 @@
                 </main>
 
                 <footer class="game-ground">
-                    <canvas id="catGroundCanvas" width="450" height="35"></canvas>
+                    <canvas id="catGroundCanvas" width="380" height="35"></canvas>
                 </footer>
             </div>
         </div>
     </div>
 
-    <!-- สคริปต์วาดรูปหัวใจ 8-bit ลงบน Canvas อัตโนมัติ -->
-    <script>
-        function drawPixelHearts(currentLives) {
-            const heartCanvases = document.querySelectorAll('.pixel-hearts-container .heart-icon');
-            heartCanvases.forEach((canvas, index) => {
-                const ctx = canvas.getContext('2d');
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                
-                const isAlive = index < currentLives;
-                const color = isAlive ? '#ff3333' : '#444444'; // แดงถ้ายังมีชีวิต เทาถ้าเสียชีวิต
-                
-                // รูปแบบพิกเซลหัวใจ 13x11
-                const heartMatrix = [
-                    [0,1,1,0,0,0,1,1,0],
-                    [1,1,1,1,0,1,1,1,1],
-                    [1,1,1,1,1,1,1,1,1],
-                    [1,1,1,1,1,1,1,1,1],
-                    [0,1,1,1,1,1,1,1,0],
-                    [0,0,1,1,1,1,1,0,0],
-                    [0,0,0,1,1,1,0,0,0],
-                    [0,0,0,0,1,0,0,0,0]
-                ];
-
-                const pixelSize = 1;
-                ctx.fillStyle = color;
-                for (let r = 0; r < heartMatrix.length; r++) {
-                    for (let c = 0; c < heartMatrix[r].length; c++) {
-                        if (heartMatrix[r][c] === 1) {
-                            ctx.fillRect(c * pixelSize + 2, r * pixelSize + 1, pixelSize, pixelSize);
-                        }
-                    }
-                }
-            });
-        }
-        // เรียกใช้งานจำลอง (เมื่อ script.js หลักทำงานจะสั่งอัปเดตตามเลือดจริง)
-        window.addEventListener('DOMContentLoaded', () => { drawPixelHearts(5); });
-    </script>
     <script src="script.js"></script>
 </body>
 </html>
