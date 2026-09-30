@@ -97,7 +97,7 @@ class SoundFX {
     playGameOver() {
         if (this.muted) return;
         this.init();
-        const notes = [293.66, 277.18, 261.63, 246.94, 220.00, 196.00]; // D, C#, C, B, A, G (คอร์ดถอยหลังเศร้าๆ)
+        const notes = [293.66, 277.18, 261.63, 246.94, 220.00, 196.00]; // D, C#, C, B, A, G
         const durations = [0.2, 0.2, 0.2, 0.2, 0.3, 0.6];
         let delay = 0;
 
@@ -119,7 +119,7 @@ class SoundFX {
             osc.start(now);
             osc.stop(now + dur);
 
-            delay += dur * 0.85; // เว้นจังหวะโน้ตถัดไป
+            delay += dur * 0.85;
         });
     }
 
@@ -495,10 +495,8 @@ function shuffleArray(array) {
 }
 
 function renderLives() {
-    livesDisplay.innerHTML = '';
-    for (let i = 0; i < lives; i++) {
-        livesDisplay.innerHTML += '❤️';
-    }
+    // เรียกใช้ฟังก์ชันวาดพิกเซลหัวใจแทนการใช้อีโมจิแบบเดิม
+    drawPixelHearts(lives);
 }
 
 function drawHero(ctx, frame) {
@@ -745,3 +743,36 @@ document.body.addEventListener('click', () => {
 // Start Loops and Game
 initGame();
 animateLoop();
+
+function drawPixelHearts(currentLives) {
+    const heartCanvases = document.querySelectorAll('.pixel-hearts-container .heart-icon');
+    heartCanvases.forEach((canvas, index) => {
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        
+        const isAlive = index < currentLives;
+        const color = isAlive ? '#ff3333' : '#444444'; // สีแดงถ้ายังมีชีวิต สีเทาถ้าตาย
+        
+        // โครงสร้างพิกเซลหัวใจขนาด 9x8
+        const heartMatrix = [
+            [0,1,1,0,0,0,1,1,0],
+            [1,1,1,1,0,1,1,1,1],
+            [1,1,1,1,1,1,1,1,1],
+            [1,1,1,1,1,1,1,1,1],
+            [0,1,1,1,1,1,1,1,0],
+            [0,0,1,1,1,1,1,0,0],
+            [0,0,0,1,1,1,0,0,0],
+            [0,0,0,0,1,0,0,0,0]
+        ];
+
+        ctx.fillStyle = color;
+        for (let r = 0; r < heartMatrix.length; r++) {
+            for (let c = 0; c < heartMatrix[r].length; c++) {
+                if (heartMatrix[r][c] === 1) {
+                    ctx.fillRect(c + 2, r + 1, 1, 1);
+                }
+            }
+        }
+    });
+}
