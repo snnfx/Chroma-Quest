@@ -1,480 +1,415 @@
-:root {
-    --sky-blue: #4080fe;
-    --pixel-yellow: #f8e000;
-    --ground-dark: #702808;
-    --ground-top: #00a800;
-    --rpg-border: #ffffff;
-    --rpg-bg: #000000;
-}
-
-* {
-    box-sizing: border-box;
+/* โครงสร้างหลักสไตล์เครื่องเกมพกพา Retro */
+body {
+    background-color: #121214;
+    color: #fff;
+    font-family: 'Sarabun', sans-serif;
     margin: 0;
     padding: 0;
-    user-select: none;
-}
-
-body {
-    background-color: #0b0b12;
-    font-family: 'Sarabun', sans-serif;
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    padding: 4px;
+    overflow-x: hidden;
 }
 
 .console-body {
-    background: #2b2b36;
-    border: 4px solid #1a1a22;
+    background: linear-gradient(135deg, #2a2a35 0%, #1a1a24 100%);
+    border: 4px solid #444;
     border-radius: 16px;
-    padding: 8px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.8), inset 0 2px 4px rgba(255,255,255,0.1);
-    max-width: 440px;
+    padding: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.8), inset 0 2px 5px rgba(255,255,255,0.1);
+    max-width: 420px;
     width: 100%;
+    box-sizing: border-box;
 }
 
 .brand-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 6px;
+    margin-bottom: 8px;
     padding: 0 4px;
 }
 
 .brand-logo {
-    font-family: 'Press Start 2P', monospace;
+    font-family: 'Press Start 2P', cursive;
     font-size: 9px;
-    color: #888;
+    color: #8ab4f8;
     letter-spacing: 1px;
 }
 
 .power-led {
-    font-family: 'Press Start 2P', monospace;
+    font-family: 'Press Start 2P', cursive;
     font-size: 7px;
     color: #aaa;
     display: flex;
     align-items: center;
-    gap: 4px;
+    gap: 6px;
 }
 
 .led-light {
-    width: 6px;
-    height: 6px;
-    background-color: #ff3333;
+    width: 7px;
+    height: 7px;
+    background-color: #00e676;
     border-radius: 50%;
-    box-shadow: 0 0 6px #ff3333;
+    box-shadow: 0 0 8px #00e676;
+    animation: pulse-led 2s infinite;
 }
 
+@keyframes pulse-led {
+    0% { opacity: 1; }
+    50% { opacity: 0.4; }
+    100% { opacity: 1; }
+}
+
+/* หน้าจอเกม พร้อมลวดลายตารางเรโทร (Grid) */
 .game-screen-wrapper {
     position: relative;
-    border: 3px solid #111;
+    background: #1a237e;
+    background-image: 
+        linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+    background-size: 20px 20px;
+    border: 4px solid #000;
     border-radius: 8px;
     overflow: hidden;
-    box-shadow: inset 0 0 10px rgba(0,0,0,0.8);
+    height: 540px;
+    box-shadow: inset 0 0 20px rgba(0,0,0,0.8);
 }
 
+/* เอฟเฟกต์เส้น CRT แบบจางลง */
 .crt-overlay {
     position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.15) 50%);
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%);
     background-size: 100% 4px;
-    z-index: 50;
+    z-index: 10;
     pointer-events: none;
 }
 
 .game-container {
-    width: 100%;
-    height: 510px; /* พอดีจอโทรศัพท์ ไม่ล้นขอบด้านล่าง */
-    background-color: var(--sky-blue);
-    position: relative;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    overflow: hidden;
-}
-
-.game-container.screen-shake {
-    animation: shake 0.3s ease-in-out;
-}
-
-@keyframes shake {
-    0%, 100% { transform: translate(0, 0); }
-    20% { transform: translate(-5px, 3px); }
-    40% { transform: translate(5px, -3px); }
-    60% { transform: translate(-3px, 2px); }
-    80% { transform: translate(3px, -2px); }
-}
-
-.cloud {
-    position: absolute;
-    background: #ffffff;
-    border-radius: 8px;
-    opacity: 0.85;
-    z-index: 1;
-}
-
-.cloud-1 { width: 60px; height: 16px; top: 25px; left: -70px; animation: floatCloud 20s linear infinite; }
-.cloud-2 { width: 80px; height: 20px; top: 70px; left: -90px; animation: floatCloud 26s linear infinite 4s; }
-.cloud-3 { width: 50px; height: 14px; top: 110px; left: -60px; animation: floatCloud 22s linear infinite 9s; }
-
-@keyframes floatCloud {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(500px); }
-}
-
-.game-header {
+    height: 100%;
     position: relative;
-    z-index: 10;
-    padding: 6px 8px;
+    z-index: 2;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+/* ส่วนหัวในเกม */
+.game-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: rgba(0,0,0,0.3);
+    margin-bottom: 6px;
+    background: rgba(0, 0, 0, 0.4);
+    padding: 5px 8px;
+    border-radius: 4px;
+    border: 2px solid #333;
 }
 
 .stage-tag, .score-display {
-    font-family: 'Press Start 2P', monospace;
-    font-size: 7.5px;
-    color: #fff;
-    text-shadow: 1px 1px 0 #000;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 8px;
+    color: #ffeb3b;
 }
 
 .audio-btn {
-    font-family: 'Press Start 2P', monospace;
-    font-size: 6.5px;
-    background: #000;
-    color: var(--pixel-yellow);
-    border: 2px solid #fff;
-    padding: 2px 5px;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 6px;
+    background: #333;
+    color: #fff;
+    border: 1px solid #777;
+    padding: 4px 6px;
     cursor: pointer;
+    border-radius: 4px;
+}
+.audio-btn:hover {
+    background: #555;
 }
 
+/* พื้นที่ต่อสู้ */
 .battle-arena {
-    position: relative;
-    z-index: 10;
-    padding: 6px 10px;
+    flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 5px;
-    flex: 1;
+    gap: 6px;
+    position: relative;
 }
 
 .unit-card {
+    background: rgba(0, 0, 0, 0.5);
+    border: 2px solid #444;
+    border-radius: 6px;
+    padding: 5px 8px;
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
 
 .monster-unit {
-    flex-direction: row;
+    border-color: #d32f2f;
 }
 
 .hero-unit {
-    flex-direction: row-reverse;
+    border-color: #1976d2;
 }
 
 .unit-status-bar {
-    background: #000;
-    border: 2px solid #fff;
-    padding: 3px 6px;
-    border-radius: 4px;
-    min-width: 140px;
-    box-shadow: 2px 2px 0 rgba(0,0,0,0.5);
+    flex: 1;
 }
 
 .unit-name {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 7px;
+    margin-bottom: 3px;
     color: #fff;
-    font-size: 9px;
-    font-weight: bold;
-    margin-bottom: 2px;
-    /* เอฟเฟกต์ฟอนต์ 8-bit ภาษาไทย */
-    text-shadow: 1px 1px 0 #333;
 }
 
 .hp-bar-bg {
     width: 100%;
-    height: 6px;
-    background: #444;
-    border: 1px solid #000;
+    height: 7px;
+    background: #333;
+    border: 1px solid #555;
+    border-radius: 2px;
+    overflow: hidden;
 }
 
 .hp-bar-fill {
     height: 100%;
-    width: 100%;
     background: #00e676;
-    transition: width 0.4s ease;
-}
-
-/* สไตล์กล่องหัวใจพิกเซล 8-bit */
-.pixel-hearts-container {
-    display: flex;
-    gap: 4px;
-    align-items: center;
-    background: #111;
-    padding: 2px 4px;
-    border-radius: 2px;
-    border: 1px solid #333;
-    width: fit-content;
-}
-
-.heart-icon {
-    width: 16px;
-    height: 14px;
-    image-rendering: pixelated; /* คงความคมชัดแบบพิกเซลอาร์ต */
+    transition: width 0.3s ease;
 }
 
 .sprite-box {
-    position: relative;
-    width: 42px;
-    height: 42px;
+    width: 40px;
+    height: 40px;
     display: flex;
-    align-items: center;
     justify-content: center;
+    align-items: center;
+    position: relative;
 }
 
-.damage-popup {
-    position: absolute;
-    top: -8px;
-    font-family: 'Press Start 2P', monospace;
-    font-size: 11px;
-    color: #ffeb3b;
-    text-shadow: 2px 2px 0 #f44336, -2px -2px 0 #000;
-    animation: popUp 0.6s ease-out forwards;
-    z-index: 20;
+.sprite-box canvas {
+    image-rendering: pixelated;
 }
 
-@keyframes popUp {
-    0% { opacity: 0; transform: translateY(8px) scale(0.5); }
-    50% { opacity: 1; transform: translateY(-10px) scale(1.2); }
-    100% { opacity: 0; transform: translateY(-16px) scale(1); }
+.pixel-hearts-container {
+    display: flex;
+    gap: 2px;
 }
 
+.heart-icon {
+    image-rendering: pixelated;
+}
+
+/* กล่องบทสนทนา RPG */
 .rpg-dialog-box {
-    background-color: var(--rpg-bg);
-    border: 2px solid var(--rpg-border);
-    border-radius: 5px;
+    background: rgba(15, 15, 25, 0.9);
+    border: 3px solid #7c4dff;
+    border-radius: 6px;
     padding: 6px 8px;
-    box-shadow: 0 2px 0 #000;
-}
-
-.dialog-header {
-    border-bottom: 1px dashed #444;
-    padding-bottom: 2px;
-    margin-bottom: 3px;
+    min-height: 55px;
 }
 
 .dialog-title {
-    color: var(--pixel-yellow);
-    font-size: 10px;
-    font-weight: bold;
-    text-shadow: 1px 1px 0 #333;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 7px;
+    color: #b388ff;
 }
 
 .dialog-text {
+    font-family: 'Sarabun', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    margin: 4px 0 0 0;
     color: #fff;
-    font-size: 10px;
-    line-height: 1.35;
-    /* ทำให้ตัวหนังสือภาษาไทยดูเหลี่ยมคมสไตล์ 8-bit */
-    text-shadow: 1px 1px 0 #111;
+    line-height: 1.3;
 }
 
+/* ปุ่มตัวเลือก (ปรับขนาดให้ใช้นิ้วจิ้มได้ง่ายบนมือถือ) */
 .action-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 4px;
-    margin-top: 1px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
 }
 
 .pixel-btn {
     font-family: 'Sarabun', sans-serif;
     font-weight: 800;
-    font-size: 10px;
-    padding: 6px 8px;
-    background-color: #222;
+    font-size: 12px;
+    background: #37474f;
     color: #fff;
-    border: 2px solid #fff;
+    border: 2px solid #546e7a;
+    border-bottom: 3px solid #263238;
+    padding: 7px 10px;
     border-radius: 4px;
     cursor: pointer;
-    box-shadow: 2px 2px 0 #000;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
     text-align: left;
-    gap: 5px;
     transition: all 0.1s ease;
-    text-shadow: 1px 1px 0 #000;
 }
 
-.pixel-btn::before {
-    content: '▶';
-    font-size: 7px;
-    color: transparent;
+.pixel-btn:hover:not(.disabled) {
+    background: #455a64;
+    border-color: #78909c;
 }
 
-.pixel-btn:hover {
-    background-color: var(--pixel-yellow);
-    color: #000;
-    border-color: #000;
-    text-shadow: none;
-}
-
-.pixel-btn:hover::before {
-    color: #000;
-}
-
-.pixel-btn.disabled {
-    pointer-events: none;
-    opacity: 0.8;
+.pixel-btn:active:not(.disabled) {
+    transform: translateY(2px);
+    border-bottom-width: 1px;
 }
 
 .pixel-btn.correct-btn {
-    background-color: #4caf50 !important;
-    color: #fff !important;
+    background: #2e7d32 !important;
+    border-color: #4caf50 !important;
 }
 
 .pixel-btn.wrong-btn {
-    background-color: #f44336 !important;
-    color: #fff !important;
+    background: #c62828 !important;
+    border-color: #f44336 !important;
 }
 
+.pixel-btn.disabled {
+    opacity: 0.7;
+    cursor: default;
+}
+
+/* กล่องแสดงผลลัพธ์เฉลย */
 .feedback-box {
-    background: #000;
-    border: 2px solid var(--pixel-yellow);
-    border-radius: 5px;
+    background: rgba(0, 0, 0, 0.9);
+    border: 3px solid #ffeb3b;
+    border-radius: 6px;
     padding: 6px;
-    color: #fff;
-    font-size: 10px;
-    text-align: center;
-    text-shadow: 1px 1px 0 #111;
+    font-size: 11px;
+    font-weight: 600;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
 }
 
 .next-btn {
-    width: 100%;
-    margin-top: 3px;
-    background-color: #00e676;
-    color: #000;
-    justify-content: center;
-    text-shadow: none;
-}
-
-.next-btn:hover {
-    background-color: #00c853;
-}
-
-.hidden { display: none !important; }
-
-/* Victory Screen Overlay */
-.victory-screen {
-    position: absolute;
-    top: 15px; left: 10px; right: 10px;
-    background: #000;
-    border: 3px solid var(--pixel-yellow);
-    border-radius: 6px;
-    padding: 12px;
     text-align: center;
-    z-index: 40;
-    color: #fff;
-    box-shadow: 0 0 15px rgba(0,0,0,0.9);
-    animation: fadeIn 0.3s ease-out;
+    background: #00838f;
+    border-color: #00acc1;
+    border-bottom-color: #006064;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 7px;
+    padding: 5px;
 }
 
-.trophy {
-    font-size: 32px;
-    animation: bounce 1s infinite ease-in-out;
+/* หน้าจอ Victory / Game Over Overlay */
+.victory-screen, .game-over-screen {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(10, 10, 15, 0.95);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 15px;
+    z-index: 20;
+    box-sizing: border-box;
 }
 
-.victory-title {
-    font-family: 'Press Start 2P', monospace;
-    font-size: 13px;
-    color: var(--pixel-yellow);
-    margin: 6px 0;
-}
-
-.victory-desc {
-    font-size: 10px;
-    line-height: 1.3;
+.trophy, .game-over-icon {
+    font-size: 35px;
     margin-bottom: 8px;
-    text-shadow: 1px 1px 0 #111;
 }
 
-.restart-btn {
-    width: 100%;
-    background-color: #29b6f6;
+.victory-title, .game-over-title {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 15px;
+    margin-bottom: 8px;
+    color: #ffeb3b;
+}
+
+.victory-desc, .game-over-desc {
+    font-size: 12px;
+    margin-bottom: 15px;
+    line-height: 1.4;
+}
+
+.restart-btn, .retry-btn {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 8px;
+    background: #2e7d32;
+    border-color: #4caf50;
+    border-bottom: 3px solid #1b5e20;
     color: #fff;
-    justify-content: center;
-    text-shadow: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 4px;
 }
 
-/* Game Over Screen Overlay */
-.game-over-screen {
-    position: absolute;
-    top: 15px; left: 10px; right: 10px;
-    background: #110000;
-    border: 3px solid #ff3333;
-    border-radius: 6px;
-    padding: 12px;
-    text-align: center;
-    z-index: 40;
-    color: #fff;
-    box-shadow: 0 0 20px rgba(255, 0, 0, 0.6);
-    animation: fadeIn 0.3s ease-out;
-}
-
-.game-over-icon {
-    font-size: 32px;
-    animation: shake 1.5s infinite ease-in-out;
-}
-
-.game-over-title {
-    font-family: 'Press Start 2P', monospace;
-    font-size: 13px;
-    color: #ff3333;
-    margin: 6px 0;
-    text-shadow: 1px 1px 0 #000;
-}
-
-.game-over-desc {
-    font-size: 10px;
-    line-height: 1.3;
-    margin-bottom: 10px;
-    color: #ffcccc;
-    white-space: pre-line;
-    text-shadow: 1px 1px 0 #111;
-}
-
-.retry-btn {
-    width: 100%;
-    background-color: #ff1744;
-    color: #fff;
-    justify-content: center;
-    text-shadow: none;
-}
-
-.retry-btn:hover {
-    background-color: #d50000;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; transform: scale(0.9); }
-    to { opacity: 1; transform: scale(1); }
-}
-
+/* พื้นหลังด้านล่าง (Ground) */
 .game-ground {
-    position: relative;
-    height: 35px;
-    background-color: var(--ground-dark);
-    border-top: 4px solid var(--ground-top);
-    overflow: hidden;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 30px;
+    pointer-events: none;
+    z-index: 3;
 }
 
-#catGroundCanvas {
+.game-ground canvas {
     width: 100%;
     height: 100%;
-    display: block;
+    image-rendering: pixelated;
 }
 
-@keyframes bounce {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-4px); }
+/* Utilities */
+.hidden {
+    display: none !important;
+}
+
+/* Media Query สำหรับหน้าจอโทรศัพท์ขนาดเล็กเป็นพิเศษ */
+@media screen and (max-width: 480px) {
+    body {
+        align-items: flex-start;
+        padding: 5px;
+    }
+    .console-body {
+        border: none;
+        border-radius: 0;
+        padding: 5px;
+        background: transparent;
+        box-shadow: none;
+    }
+    .game-screen-wrapper {
+        height: 92vh;
+        border-width: 2px;
+    }
+}
+
+/* เอฟเฟกต์สั่นจอตอนตอบผิด */
+@keyframes shake {
+    0% { transform: translate(1px, 1px) rotate(0deg); }
+    20% { transform: translate(-3px, 0px) rotate(-1deg); }
+    40% { transform: translate(1px, -1px) rotate(1deg); }
+    60% { transform: translate(-3px, 1px) rotate(0deg); }
+    80% { transform: translate(1px, -1px) rotate(1deg); }
+    100% { transform: translate(0, 0) rotate(0deg); }
+}
+
+.screen-shake {
+    animation: shake 0.3s;
+}
+
+.damage-popup {
+    position: absolute;
+    top: -10px;
+    right: 10px;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 9px;
+    color: #ff5252;
+    text-shadow: 1px 1px #000;
+    animation: float-up 0.5s ease-out forwards;
+}
+
+@keyframes float-up {
+    0% { transform: translateY(0); opacity: 1; }
+    100% { transform: translateY(-12px); opacity: 0; }
 }
