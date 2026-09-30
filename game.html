@@ -50,8 +50,13 @@
                         </div>
                         <div class="unit-status-bar">
                             <div class="unit-name">ผู้กล้าพิกเซล (Lv.4)</div>
-                            <div class="lives-hearts" id="lives-display">
-                                ❤️❤️❤️❤️❤
+                            <!-- ช่องแสดงหัวใจพิกเซล 8-bit (5 ดวง) -->
+                            <div class="pixel-hearts-container" id="lives-display">
+                                <canvas class="heart-icon" width="13" height="11"></canvas>
+                                <canvas class="heart-icon" width="13" height="11"></canvas>
+                                <canvas class="heart-icon" width="13" height="11"></canvas>
+                                <canvas class="heart-icon" width="13" height="11"></canvas>
+                                <canvas class="heart-icon" width="13" height="11"></canvas>
                             </div>
                         </div>
                     </div>
@@ -99,6 +104,43 @@
         </div>
     </div>
 
+    <!-- สคริปต์วาดรูปหัวใจ 8-bit ลงบน Canvas อัตโนมัติ -->
+    <script>
+        function drawPixelHearts(currentLives) {
+            const heartCanvases = document.querySelectorAll('.pixel-hearts-container .heart-icon');
+            heartCanvases.forEach((canvas, index) => {
+                const ctx = canvas.getContext('2d');
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                const isAlive = index < currentLives;
+                const color = isAlive ? '#ff3333' : '#444444'; // แดงถ้ายังมีชีวิต เทาถ้าเสียชีวิต
+                
+                // รูปแบบพิกเซลหัวใจ 13x11
+                const heartMatrix = [
+                    [0,1,1,0,0,0,1,1,0],
+                    [1,1,1,1,0,1,1,1,1],
+                    [1,1,1,1,1,1,1,1,1],
+                    [1,1,1,1,1,1,1,1,1],
+                    [0,1,1,1,1,1,1,1,0],
+                    [0,0,1,1,1,1,1,0,0],
+                    [0,0,0,1,1,1,0,0,0],
+                    [0,0,0,0,1,0,0,0,0]
+                ];
+
+                const pixelSize = 1;
+                ctx.fillStyle = color;
+                for (let r = 0; r < heartMatrix.length; r++) {
+                    for (let c = 0; c < heartMatrix[r].length; c++) {
+                        if (heartMatrix[r][c] === 1) {
+                            ctx.fillRect(c * pixelSize + 2, r * pixelSize + 1, pixelSize, pixelSize);
+                        }
+                    }
+                }
+            });
+        }
+        // เรียกใช้งานจำลอง (เมื่อ script.js หลักทำงานจะสั่งอัปเดตตามเลือดจริง)
+        window.addEventListener('DOMContentLoaded', () => { drawPixelHearts(5); });
+    </script>
     <script src="script.js"></script>
 </body>
 </html>
