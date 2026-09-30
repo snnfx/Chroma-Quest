@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Chroma Quest: วรรณะสีอุ่น VS วรรณะสีเย็น (8-Bit Pixel RPG)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Sarabun:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="console-body">
+        <div class="brand-header">
+            <span class="brand-logo">NINTENDO-8Bit</span>
+            <div class="power-led"><div class="led-light"></div> POWER</div>
+        </div>
+
+        <div class="game-screen-wrapper">
+            <div class="crt-overlay"></div>
+
+            <div class="game-container" id="game-container">
+                <div class="cloud cloud-1"></div>
+                <div class="cloud cloud-2"></div>
+                <div class="cloud cloud-3"></div>
+
+                <header class="game-header">
+                    <div class="stage-tag" id="level-title-display">STAGE 01/20</div>
+                    <div class="score-display" id="score-display">SCORE: 0000</div>
+                    <button id="audio-toggle-btn" class="audio-btn">🎶 BGM: เปิด</button>
+                </header>
+
+                <main class="battle-arena">
+                    
+                    <div class="unit-card monster-unit" id="monster-unit">
+                        <div class="unit-status-bar">
+                            <div class="unit-name" id="monster-name">มังกรเพลิง</div>
+                            <div class="hp-bar-bg"><div class="hp-bar-fill monster-hp" id="monster-hp-bar"></div></div>
+                        </div>
+                        <div class="sprite-box">
+                            <div class="damage-popup hidden" id="damage-popup">-999!</div>
+                            <canvas id="monsterCanvas" width="60" height="60"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="unit-card hero-unit">
+                        <div class="sprite-box">
+                            <canvas id="heroCanvas" width="60" height="60"></canvas>
+                        </div>
+                        <div class="unit-status-bar">
+                            <div class="unit-name">ผู้กล้าพิกเซล (Lv.4)</div>
+                            <div class="lives-hearts" id="lives-display">
+                                ❤️❤️❤️❤️❤
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="rpg-dialog-box" id="dialog-box">
+                        <div class="dialog-header">
+                            <span class="dialog-title" id="scenario-title">หัวข้อคำถาม</span>
+                        </div>
+                        <p class="dialog-text" id="scenario-desc">
+                            กำลังโหลดคำถาม...
+                        </p>
+                    </div>
+
+                    <div class="action-grid" id="choices-container">
+                        <!-- Dynamic Choices -->
+                    </div>
+
+                    <div id="feedback-box" class="feedback-box hidden">
+                        <div id="feedback-text"></div>
+                        <button id="next-btn" class="pixel-btn next-btn">โจมตีต่อ ➔</button>
+                    </div>
+
+                    <!-- Victory Screen Overlay -->
+                    <div id="victory-screen" class="victory-screen hidden">
+                        <div class="trophy">🏆</div>
+                        <h2 class="victory-title">VICTORY!</h2>
+                        <p class="victory-desc" id="victory-desc">สุดยอดมากผู้กล้า! คุณพิชิตคำถามทฤษฎีวรรณะสีอุ่น-สีเย็น ทั้ง 20 ข้อได้สำเร็จ!</p>
+                        <button id="restart-btn" class="pixel-btn restart-btn">🔄 เล่นใหม่อีกครั้ง</button>
+                    </div>
+
+                    <!-- Game Over Screen Overlay -->
+                    <div id="game-over-screen" class="game-over-screen hidden">
+                        <div class="game-over-icon">💀</div>
+                        <h2 class="game-over-title">GAME OVER</h2>
+                        <p class="game-over-desc" id="game-over-desc">พลังชีวิตหมดลงแล้ว! ผู้กล้าพ่ายแพ้ในศึกนี้...</p>
+                        <button id="retry-btn" class="pixel-btn retry-btn">🔄 ลองใหม่อีกครั้ง</button>
+                    </div>
+
+                </main>
+
+                <footer class="game-ground">
+                    <canvas id="catGroundCanvas" width="480" height="54"></canvas>
+                </footer>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

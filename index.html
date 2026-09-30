@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Chroma Quest - Start Game</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Sarabun:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --sky-blue: #4080fe;
+            --pixel-yellow: #f8e000;
+            --ground-dark: #702808;
+            --ground-top: #00a800;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            user-select: none;
+        }
+
+        body {
+            background-color: #0b0b12;
+            font-family: 'Sarabun', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 10px;
+            overflow-x: hidden;
+        }
+
+        .console-body {
+            background: #2b2b36;
+            border: 6px solid #1a1a22;
+            border-radius: 20px;
+            padding: 15px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.8), inset 0 2px 4px rgba(255,255,255,0.1);
+            max-width: 520px;
+            width: 100%;
+        }
+
+        .brand-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            padding: 0 4px;
+        }
+
+        .brand-logo {
+            font-family: 'Press Start 2P', monospace;
+            font-size: 10px;
+            color: #888;
+            letter-spacing: 1px;
+        }
+
+        .power-led {
+            font-family: 'Press Start 2P', monospace;
+            font-size: 7px;
+            color: #aaa;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .led-light {
+            width: 8px;
+            height: 8px;
+            background-color: #ff3333;
+            border-radius: 50%;
+            box-shadow: 0 0 8px #ff3333;
+        }
+
+        .game-screen-wrapper {
+            position: relative;
+            border: 4px solid #111;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: inset 0 0 12px rgba(0,0,0,0.8);
+        }
+
+        .crt-overlay {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.15) 50%);
+            background-size: 100% 4px;
+            z-index: 50;
+            pointer-events: none;
+        }
+
+        .start-container {
+            width: 100%;
+            height: auto;
+            min-height: 520px;
+            background-color: var(--sky-blue);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            overflow: hidden;
+            padding: 20px 10px;
+            text-align: center;
+        }
+
+        .game-title {
+            font-family: 'Press Start 2P', monospace;
+            color: var(--pixel-yellow);
+            font-size: clamp(20px, 6vw, 26px);
+            line-height: 1.4;
+            text-shadow: 3px 3px 0 #000, -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000;
+            margin-top: 15px;
+            animation: bounce 1.5s infinite ease-in-out;
+        }
+
+        .game-subtitle {
+            font-family: 'Press Start 2P', monospace;
+            color: #fff;
+            font-size: clamp(8px, 2.5vw, 10px);
+            margin-top: 8px;
+            text-shadow: 2px 2px 0 #000;
+        }
+
+        .cat-canvas-container {
+            margin: 10px 0;
+            background: rgba(0,0,0,0.2);
+            border-radius: 8px;
+            padding: 8px;
+            border: 2px dashed rgba(255,255,255,0.4);
+            max-width: 100%;
+        }
+
+        #startCatCanvas {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .start-btn {
+            font-family: 'Press Start 2P', monospace;
+            font-size: clamp(12px, 4vw, 14px);
+            padding: 14px 24px;
+            background-color: #00e676;
+            color: #000;
+            border: 4px solid #fff;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 6px 0 #000;
+            transition: all 0.1s ease;
+            text-decoration: none;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+
+        .start-btn:hover {
+            transform: translateY(-2px);
+            background-color: #00c853;
+            box-shadow: 0 8px 0 #000;
+        }
+
+        .start-btn:active {
+            transform: translateY(4px);
+            box-shadow: 0 2px 0 #000;
+        }
+
+        .blink-text {
+            font-family: 'Press Start 2P', monospace;
+            font-size: clamp(8px, 2.5vw, 10px);
+            color: #fff;
+            margin-bottom: 12px;
+            text-shadow: 2px 2px 0 #000;
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0%, 49% { opacity: 1; }
+            50%, 100% { opacity: 0; }
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-6px); }
+        }
+
+        .credits {
+            font-size: clamp(10px, 3vw, 11px);
+            color: #fff;
+            text-shadow: 1px 1px 0 #000;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="console-body">
+        <div class="brand-header">
+            <span class="brand-logo">NINTENDO-8Bit</span>
+            <div class="power-led"><div class="led-light"></div> POWER</div>
+        </div>
+
+        <div class="game-screen-wrapper">
+            <div class="crt-overlay"></div>
+
+            <div class="start-container">
+                <div>
+                    <h1 class="game-title">CHROMA<br>QUEST</h1>
+                    <div class="game-subtitle">8-BIT COLOR THEORY RPG</div>
+                </div>
+
+                <div class="cat-canvas-container">
+                    <canvas id="startCatCanvas" width="280" height="120"></canvas>
+                </div>
+
+                <div>
+                    <div class="blink-text">PRESS START TO PLAY</div>
+                    <button id="startBtn" class="start-btn">START GAME</button>
+                    <div class="credits">ศึกทดสอบวรรณะสีอุ่น VS วรรณะสีเย็น (20 ข้อ)</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('startCatCanvas');
+        const ctx = canvas.getContext('2d');
+
+        let catX = 20;
+        let catY = 50;
+        let frame = 0;
+        let direction = 1;
+
+        function drawPixelCat(x, y, animFrame, flip) {
+            ctx.save();
+            if (flip) {
+                ctx.translate(x + 50, y);
+                ctx.scale(-1, 1);
+                ctx.translate(-x, -y);
+            }
+
+            const p = 3;
+            const bodyColor = '#ff9800';
+            const darkColor = '#e65100';
+            const eyeColor = '#000000';
+            const whiteColor = '#ffffff';
+
+            ctx.fillStyle = bodyColor;
+            ctx.fillRect(x + 10*p, y + 2*p, 6*p, 5*p);
+
+            ctx.fillStyle = darkColor;
+            ctx.fillRect(x + 10*p, y + 0*p, 2*p, 2*p);
+            ctx.fillRect(x + 14*p, y + 0*p, 2*p, 2*p);
+
+            ctx.fillStyle = whiteColor;
+            ctx.fillRect(x + 11*p, y + 3*p, 2*p, 2*p);
+            ctx.fillRect(x + 14*p, y + 3*p, 2*p, 2*p);
+            ctx.fillStyle = eyeColor;
+            ctx.fillRect(x + 12*p, y + 4*p, 1*p, 1*p);
+            ctx.fillRect(x + 15*p, y + 4*p, 1*p, 1*p);
+
+            ctx.fillStyle = bodyColor;
+            ctx.fillRect(x + 3*p, y + 5*p, 9*p, 5*p);
+
+            ctx.fillStyle = darkColor;
+            const tailY = (animFrame % 2 === 0) ? y + 2*p : y + 1*p;
+            ctx.fillRect(x + 0*p, tailY, 3*p, 2*p);
+
+            ctx.fillStyle = darkColor;
+            if (animFrame % 2 === 0) {
+                ctx.fillRect(x + 3*p, y + 10*p, 2*p, 3*p);
+                ctx.fillRect(x + 10*p, y + 10*p, 2*p, 3*p);
+            } else {
+                ctx.fillRect(x + 5*p, y + 10*p, 2*p, 3*p);
+                ctx.fillRect(x + 8*p, y + 10*p, 2*p, 3*p);
+            }
+
+            ctx.restore();
+        }
+
+        function render() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            ctx.fillStyle = '#00a800';
+            ctx.fillRect(0, 100, canvas.width, 20);
+
+            catX += direction * 2;
+            if (catX > canvas.width - 70) {
+                direction = -1;
+            } else if (catX < 10) {
+                direction = 1;
+            }
+
+            frame++;
+            const animFrame = Math.floor(frame / 8);
+            drawPixelCat(catX, catY, animFrame, direction === -1);
+
+            requestAnimationFrame(render);
+        }
+
+        render();
+
+        document.getElementById('startBtn').addEventListener('click', () => {
+            const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            const now = audioCtx.currentTime;
+            
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            
+            osc.type = 'square';
+            osc.frequency.setValueAtTime(300, now);
+            osc.frequency.exponentialRampToValueAtTime(800, now + 0.15);
+            
+            gain.gain.setValueAtTime(0.2, now);
+            gain.gain.linearRampToValueAtTime(0.01, now + 0.15);
+            
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            
+            osc.start(now);
+            osc.stop(now + 0.15);
+
+            setTimeout(() => {
+                window.location.href = 'game.html';
+            }, 200);
+        });
+    </script>
+</body>
+</html>
