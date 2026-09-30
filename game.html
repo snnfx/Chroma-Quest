@@ -2,7 +2,7 @@
 <html lang="th">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chroma Quest: วรรณะสีอุ่น VS วรรณะสีเย็น (8-Bit Pixel RPG)</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -28,7 +28,7 @@
                 <header class="game-header">
                     <div class="stage-tag" id="level-title-display">STAGE 01/20</div>
                     <div class="score-display" id="score-display">SCORE: 0000</div>
-                    <button id="audio-toggle-btn" class="audio-btn">🎶 BGM: เปิด</button>
+                    <button id="audio-toggle-btn" class="audio-btn">🎶 BGM: ปิด</button>
                 </header>
 
                 <main class="battle-arena">
@@ -40,13 +40,13 @@
                         </div>
                         <div class="sprite-box">
                             <div class="damage-popup hidden" id="damage-popup">-999!</div>
-                            <canvas id="monsterCanvas" width="60" height="60"></canvas>
+                            <canvas id="monsterCanvas" width="45" height="45"></canvas>
                         </div>
                     </div>
 
                     <div class="unit-card hero-unit">
                         <div class="sprite-box">
-                            <canvas id="heroCanvas" width="60" height="60"></canvas>
+                            <canvas id="heroCanvas" width="45" height="45"></canvas>
                         </div>
                         <div class="unit-status-bar">
                             <div class="unit-name">ผู้กล้าพิกเซล (Lv.4)</div>
@@ -93,7 +93,7 @@
                 </main>
 
                 <footer class="game-ground">
-                    <canvas id="catGroundCanvas" width="480" height="54"></canvas>
+                    <canvas id="catGroundCanvas" width="450" height="35"></canvas>
                 </footer>
             </div>
         </div>
