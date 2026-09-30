@@ -30,7 +30,6 @@
             align-items: center;
             min-height: 100vh;
             padding: 10px;
-            overflow-x: hidden;
         }
 
         .console-body {
@@ -39,7 +38,7 @@
             border-radius: 20px;
             padding: 15px;
             box-shadow: 0 15px 40px rgba(0,0,0,0.8), inset 0 2px 4px rgba(255,255,255,0.1);
-            max-width: 520px;
+            max-width: 480px;
             width: 100%;
         }
 
@@ -60,7 +59,7 @@
 
         .power-led {
             font-family: 'Press Start 2P', monospace;
-            font-size: 7px;
+            font-size: 8px;
             color: #aaa;
             display: flex;
             align-items: center;
@@ -94,8 +93,7 @@
 
         .start-container {
             width: 100%;
-            height: auto;
-            min-height: 520px;
+            height: 520px;
             background-color: var(--sky-blue);
             position: relative;
             display: flex;
@@ -110,17 +108,17 @@
         .game-title {
             font-family: 'Press Start 2P', monospace;
             color: var(--pixel-yellow);
-            font-size: clamp(20px, 6vw, 26px);
+            font-size: 22px;
             line-height: 1.4;
             text-shadow: 3px 3px 0 #000, -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000;
-            margin-top: 15px;
+            margin-top: 10px;
             animation: bounce 1.5s infinite ease-in-out;
         }
 
         .game-subtitle {
             font-family: 'Press Start 2P', monospace;
             color: #fff;
-            font-size: clamp(8px, 2.5vw, 10px);
+            font-size: 9px;
             margin-top: 8px;
             text-shadow: 2px 2px 0 #000;
         }
@@ -131,46 +129,40 @@
             border-radius: 8px;
             padding: 8px;
             border: 2px dashed rgba(255,255,255,0.4);
-            max-width: 100%;
-        }
-
-        #startCatCanvas {
-            max-width: 100%;
-            height: auto;
         }
 
         .start-btn {
             font-family: 'Press Start 2P', monospace;
-            font-size: clamp(12px, 4vw, 14px);
+            font-size: 12px;
             padding: 14px 24px;
             background-color: #00e676;
             color: #000;
-            border: 4px solid #fff;
+            border: 3px solid #fff;
             border-radius: 8px;
             cursor: pointer;
-            box-shadow: 0 6px 0 #000;
+            box-shadow: 0 4px 0 #000;
             transition: all 0.1s ease;
             text-decoration: none;
             display: inline-block;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
         }
 
         .start-btn:hover {
             transform: translateY(-2px);
             background-color: #00c853;
-            box-shadow: 0 8px 0 #000;
+            box-shadow: 0 6px 0 #000;
         }
 
         .start-btn:active {
-            transform: translateY(4px);
+            transform: translateY(2px);
             box-shadow: 0 2px 0 #000;
         }
 
         .blink-text {
             font-family: 'Press Start 2P', monospace;
-            font-size: clamp(8px, 2.5vw, 10px);
+            font-size: 9px;
             color: #fff;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
             text-shadow: 2px 2px 0 #000;
             animation: blink 1s infinite;
         }
@@ -186,10 +178,21 @@
         }
 
         .credits {
-            font-size: clamp(10px, 3vw, 11px);
+            font-size: 10px;
             color: #fff;
             text-shadow: 1px 1px 0 #000;
             margin-bottom: 5px;
+        }
+
+        /* รองรับหน้าจอขนาดเล็กมากๆ */
+        @media (max-height: 600px) {
+            .start-container {
+                height: 440px;
+                padding: 10px;
+            }
+            .game-title {
+                font-size: 18px;
+            }
         }
     </style>
 </head>
@@ -211,12 +214,12 @@
                 </div>
 
                 <div class="cat-canvas-container">
-                    <canvas id="startCatCanvas" width="280" height="120"></canvas>
+                    <canvas id="startCatCanvas" width="260" height="100"></canvas>
                 </div>
 
                 <div>
                     <div class="blink-text">PRESS START TO PLAY</div>
-                    <button id="startBtn" class="start-btn">START GAME</button>
+                    <a href="game.html" id="startBtn" class="start-btn">START GAME</a>
                     <div class="credits">ศึกทดสอบวรรณะสีอุ่น VS วรรณะสีเย็น (20 ข้อ)</div>
                 </div>
             </div>
@@ -228,7 +231,7 @@
         const ctx = canvas.getContext('2d');
 
         let catX = 20;
-        let catY = 50;
+        let catY = 40;
         let frame = 0;
         let direction = 1;
 
@@ -283,7 +286,7 @@
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
             ctx.fillStyle = '#00a800';
-            ctx.fillRect(0, 100, canvas.width, 20);
+            ctx.fillRect(0, 80, canvas.width, 20);
 
             catX += direction * 2;
             if (catX > canvas.width - 70) {
@@ -301,7 +304,8 @@
 
         render();
 
-        document.getElementById('startBtn').addEventListener('click', () => {
+        document.getElementById('startBtn').addEventListener('click', (e) => {
+            e.preventDefault();
             const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
             const now = audioCtx.currentTime;
             
